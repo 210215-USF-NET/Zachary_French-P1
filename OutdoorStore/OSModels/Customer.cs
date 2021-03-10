@@ -19,6 +19,10 @@ namespace OSModels
 
         public string Phone { get; set; }
 
+        public string Email { get; set; }
+
+        public List<Order> orderHistory { get; set; }
+
         private void ThrowNullException()
         {
             Log.Logger = new LoggerConfiguration().WriteTo.File("../Logs/UILogs.json").CreateLogger();

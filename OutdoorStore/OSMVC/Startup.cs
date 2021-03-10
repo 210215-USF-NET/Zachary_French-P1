@@ -5,7 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OSBL;
 using OSDL;
+using OSMVC.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +29,9 @@ namespace OSMVC
         {
             services.AddControllersWithViews();
             services.AddDbContext<OSDBContext>(options => options.UseNpgsql(Configuration.GetConnectionString("OutdoorStoreDB")));
+            services.AddScoped<IStoreBL, StoreBL>();
+            services.AddScoped<IStoreRepo, OSRepoDB>();
+            services.AddScoped<IMapper, Mapper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

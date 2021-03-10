@@ -8,6 +8,8 @@ namespace OSDL
         List<Customer> GetCustomers();
         Customer AddCustomer(Customer newCust);
         Customer GetCustomerByName(string name);
+        Customer GetCustomerByEmail(string email);
+        Customer DeleteCustomer(Customer custToBeDeleted);
         Order AddOrder(Order order);
         List<Order> GetOrders();
         List<Item> GetItems();
@@ -18,9 +20,10 @@ namespace OSDL
         Product GetProductByShortName(string str);
         Product GetProductByID(int num);
         List<Inventory> GetInventories();
-        void UpdateInventory(Inventory inv);
+        Inventory UpdateInventory(Inventory inv);
         Cart AddCart(Cart newCart);
         List<Cart> GetCarts();
-        void EmptyCart();
+        List<Cart> EmptyCart();
+        bool CustomerExists(string email, string pass);
     }
 }

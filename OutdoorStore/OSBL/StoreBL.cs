@@ -29,9 +29,9 @@ namespace OSBL
             return _repo.GetCustomerByName(name);
         }
 
-        public void AddOrder(Order order)
+        public Order AddOrder(Order order)
         {
-            _repo.AddOrder(order);
+            return _repo.AddOrder(order);
         }
 
         public List<Order> GetOrders()
@@ -83,9 +83,9 @@ namespace OSBL
             return _repo.AddItem(newItem);
         }
 
-        public void EmptyCart()
+        public List<Cart> EmptyCart()
         {
-            _repo.EmptyCart();
+            return _repo.EmptyCart();
         }
 
         public Product GetProductByShortName(string str)
@@ -93,9 +93,24 @@ namespace OSBL
             return _repo.GetProductByShortName(str);
         }
 
-        public void UpdateInventory(Inventory inv)
+        public Inventory UpdateInventory(Inventory inv)
         {
-            _repo.UpdateInventory(inv);
+            return _repo.UpdateInventory(inv);
+        }
+
+        public Customer DeleteCustomer(Customer custToBeDeleted)
+        {
+            return _repo.DeleteCustomer(custToBeDeleted);
+        }
+
+        public Customer GetCustomerByEmail(string email)
+        {
+            return _repo.GetCustomerByEmail(email);
+        }
+
+        public bool CustomerExists(string email, string pass)
+        {
+            return _repo.CustomerExists(email, pass);
         }
     }
 }

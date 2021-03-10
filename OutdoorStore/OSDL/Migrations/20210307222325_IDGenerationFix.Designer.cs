@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using OSDL;
@@ -9,9 +10,10 @@ using OSDL;
 namespace OSDL.Migrations
 {
     [DbContext(typeof(OSDBContext))]
-    partial class OSDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210307222325_IDGenerationFix")]
+    partial class IDGenerationFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,9 +68,6 @@ namespace OSDL.Migrations
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Address")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Email")
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -252,7 +251,7 @@ namespace OSDL.Migrations
             modelBuilder.Entity("OSModels.Order", b =>
                 {
                     b.HasOne("OSModels.Customer", "Customer")
-                        .WithMany("orderHistory")
+                        .WithMany()
                         .HasForeignKey("CustomerID");
 
                     b.HasOne("OSModels.Location", "Location")
@@ -262,11 +261,6 @@ namespace OSDL.Migrations
                     b.Navigation("Customer");
 
                     b.Navigation("Location");
-                });
-
-            modelBuilder.Entity("OSModels.Customer", b =>
-                {
-                    b.Navigation("orderHistory");
                 });
 
             modelBuilder.Entity("OSModels.Location", b =>

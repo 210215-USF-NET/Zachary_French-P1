@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewData["Title"] = "REI - Login Page";
+}
+
+
+@*example sign in code taken and modified from Bootstrap.JS*@
+<div class = "login-page">
+    <form>
+        <img class="logo" src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9b/REI_logo.svg/1200px-REI_logo.svg.png" width="100">
+        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+        <label for="inputEmail" class="visually-hidden">Email address</label>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <label for="inputPassword" class="visually-hidden">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        @*<div class="checkbox mb-3">
+            <label>
+                    <input type="checkbox" value="remember-me"> Remember me
+                </label>
+        </div>*@
+        <button class="btn btn-primary sMargin" type="submit" asp-controller="Customer" asp-action="Login">Sign in</button>
+        <div><span></span></div>
+        <h1 class="h3 mb-3 fw-normal">Or</h1>
+    </form>
+        <button class="btn btn-primary nav-item" type="submit" asp-area="" asp-controller="Customer" asp-action="Create">Register</button>
+</div>
