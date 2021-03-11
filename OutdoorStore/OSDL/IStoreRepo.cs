@@ -24,6 +24,8 @@ namespace OSDL
         Cart AddCart(Cart newCart);
         List<Cart> GetCarts();
         List<Cart> EmptyCart();
-        bool CustomerExists(string email, string pass);
+        bool CustomerExists(string email/*, string pass*/);
+        List<Order> GetOrdersByCustomer(string email);
+        List<Order> GetOrdersByLocation(string name);
     }
 }

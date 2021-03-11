@@ -108,9 +108,19 @@ namespace OSBL
             return _repo.GetCustomerByEmail(email);
         }
 
-        public bool CustomerExists(string email, string pass)
+        public bool CustomerExists(string email/*, string pass*/)
         {
-            return _repo.CustomerExists(email, pass);
+            return _repo.CustomerExists(email/*, pass*/);
+        }
+
+        public List<Order> GetOrdersByCustomer(string email)
+        {
+            return _repo.GetOrdersByCustomer(email);
+        }
+
+        public List<Order> GetOrdersByLocation(string name)
+        {
+            return _repo.GetOrdersByLocation(name);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OSBL;
+using OSModels;
 using OSMVC.Models;
 using System;
 using System.Collections.Generic;
@@ -21,16 +22,29 @@ namespace OSMVC.Controllers
         }
 
         // GET: CustomerController
-        public ActionResult Login(string email, string pass)
+        public ActionResult Login(string inputEmail/*, string pass*/)
         {
-            if(_storeBL.CustomerExists(email, pass))
+            if(_storeBL.CustomerExists(inputEmail/*, pass*/))
             {
-                return View("CustomerView");
+                ViewBag.Customer = _storeBL.GetCustomerByEmail(inputEmail);
+                ViewBag.orderCount = _storeBL.GetOrdersByCustomer(inputEmail).Count;
+
+                return View("CustomerHome");
             }
             else
             {
                 return View("Create");
             }
+        }
+
+        public ActionResult CustomerHome()
+        {
+            return View();
+        }
+
+        public ActionResult StoreSelector()
+        {
+            return View();
         }
 
 
@@ -62,7 +76,7 @@ namespace OSMVC.Controllers
                 try
                 {
                     _storeBL.AddCustomer(_mapper.parseToCust(newCust));
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction("Login", new { email = newCust.Email });
                 }
                 catch
                 {

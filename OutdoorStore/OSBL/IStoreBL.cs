@@ -12,12 +12,14 @@ namespace OSBL
         Customer DeleteCustomer(Customer custToBeDeleted);
         Order AddOrder(Order order);
         List<Order> GetOrders();
+        List<Order> GetOrdersByCustomer(string email);
+        List<Order> GetOrdersByLocation(string name);
         List<Location> GetLocations();
         List<Product> GetProducts();
         List<Product> GetProductsByCategories(ProductCategory pcat);
         Product GetProductByShortName(string str);
         Product GetProductByID(int num);
-        bool CustomerExists(string email, string pass);
+        bool CustomerExists(string email/*, string pass*/);
         List<Item> GetItems();
         Item AddItem(Item newItem);
         List<Inventory> GetInventories();

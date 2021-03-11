@@ -21,7 +21,7 @@ namespace OSModels
 
         public string Email { get; set; }
 
-        public List<Order> orderHistory { get; set; }
+        public List<Order> OrderHistory { get; set; }
 
         private void ThrowNullException()
         {

@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "CustomerHome";
+}
+@{ 
+    int count = ViewBag.orderCount;
+    string name = ViewBag.Customer.Name;
+}
+
+<main class="container">
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">Welcome back @name!</h1>
+        <p class="lead">Choose below to browse our products, or you can also view the details of your previous orders.</p>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 mb-3 text-center">
+        <div class="col">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header">
+                    <h4 class="my-0 fw-normal">Shop</h4>
+                </div>
+                <div class="card-body">
+                    @{
+                        ViewBag.Customer = ViewBag.Customer;
+                    }
+                    <h1 class="card-title pricing-card-title"></h1>
+                    <form><button type="submit" class="w-100 btn btn-lg btn-primary" asp-controller="Customer" asp-action="StoreSelector">Start Shopping!</button></form>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header">
+                    <h4 class="my-0 fw-normal">Order History</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">Order Count: @count</h1>
+                    <form><button type="submit" class="w-100 btn btn-lg btn-outline-primary">View my Orders</button></form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        
+    </footer>
+</main>

@@ -42,9 +42,16 @@ namespace OSDL
             return newOrder;
         }
 
-        public bool CustomerExists(string email, string pass)
+        public bool CustomerExists(string email/*, string pass*/)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return !(_context.Customers.AsNoTracking().FirstOrDefault(cust => cust.Email.ToLower().Equals(email.ToLower())) == null);
+            }
+            catch(Exception)
+            {
+                return true;
+            }
         }
 
         public Customer DeleteCustomer(Customer custToBeDeleted)
@@ -120,6 +127,30 @@ namespace OSDL
             return _context.Orders
                 .AsNoTracking()
                 .Select(o => o)
+                .ToList();
+        }
+
+        public List<Order> GetOrdersByCustomer(string email)
+        {
+            Customer c = _context.Customers
+                .AsNoTracking()
+                .FirstOrDefault(c => c.Email.ToLower().Equals(email.ToLower()));
+
+            return _context.Orders
+                .AsNoTracking()
+                .Where(o => o.CustID == c.ID)
+                .ToList();
+        }
+
+        public List<Order> GetOrdersByLocation(string name)
+        {
+            Location l = _context.Locations
+                .AsNoTracking()
+                .FirstOrDefault(l => l.Name.ToLower().Equals(name.ToLower()));
+
+            return _context.Orders
+                .AsNoTracking()
+                .Where(o => o.LocID == l.ID)
                 .ToList();
         }
 
