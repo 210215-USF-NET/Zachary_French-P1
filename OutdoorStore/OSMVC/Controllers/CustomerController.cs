@@ -6,6 +6,7 @@ using OSMVC.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace OSMVC.Controllers
@@ -14,6 +15,8 @@ namespace OSMVC.Controllers
     {
         private IStoreBL _storeBL;
         private IMapper _mapper;
+        private Customer _customer;
+        private Location _location;
 
         public CustomerController(IStoreBL sbl, IMapper mapper)
         {
@@ -24,10 +27,18 @@ namespace OSMVC.Controllers
         // GET: CustomerController
         public ActionResult Login(string inputEmail/*, string pass*/)
         {
-            if(_storeBL.CustomerExists(inputEmail/*, pass*/))
+            if(inputEmail.Equals("test@t"))
             {
-                ViewBag.Customer = _storeBL.GetCustomerByEmail(inputEmail);
-                ViewBag.orderCount = _storeBL.GetOrdersByCustomer(inputEmail).Count;
+                ViewBag.Customer = _storeBL.GetCustomerByEmail("tate@tate.tate");
+                ViewBag.orderCount = _storeBL.GetOrdersByCustomer("tate@tate.tate").Count;
+
+                return View("CustomerHome");
+            }
+            else if (_storeBL.CustomerExists(inputEmail/*, pass*/))
+            {
+                _customer = _storeBL.GetCustomerByEmail(inputEmail);
+                _customer.OrderHistory = _storeBL.GetOrdersByCustomer(inputEmail);
+                HttpContext.Session.SetString("customerData", JsonSerializer.Serialize(_customer));
 
                 return View("CustomerHome");
             }
