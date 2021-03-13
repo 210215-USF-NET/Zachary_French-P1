@@ -1,26 +1,12 @@
-﻿@using Microsoft.AspNetCore.Http
-@using OSModels;
-@using System.Text.Json;
+﻿
 @{
-    ViewData["Title"] = "StoreSelector";
+    ViewData["Title"] = "ProductView";
 }
-
-<script>
-    function chooseNewYork() {
-        @ViewBag.store = "NewYork";
-    }
-    function chooseChicago() {
-        @ViewBag.store = "Chicago";
-    }
-    function chooseLosAngeles() {
-        @ViewBag.store = "LosAngeles";
-    }
-</script>
 
 <section class="py-5 text-center container">
     <div class="row py-lg-3">
         <div class="col-lg-6 col-md-8 mx-auto">
-            <h1 class="fw-light">Store Selection</h1>
+            <h1 class="fw-light">Product Selection</h1>
             <p class="lead text-muted">Which of our lovely stores would you like to browse?</p>
         </div>
     </div>

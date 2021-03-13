@@ -29,8 +29,9 @@ namespace OSMVC.Controllers
         {
             if(inputEmail.Equals("test@t"))
             {
-                ViewBag.Customer = _storeBL.GetCustomerByEmail("tate@tate.tate");
-                ViewBag.orderCount = _storeBL.GetOrdersByCustomer("tate@tate.tate").Count;
+                _customer = _storeBL.GetCustomerByEmail("tate@tate.tate");
+                _customer.OrderHistory = _storeBL.GetOrdersByCustomer("tate@tate.tate");
+                HttpContext.Session.SetString("customerData", JsonSerializer.Serialize(_customer));
 
                 return View("CustomerHome");
             }
