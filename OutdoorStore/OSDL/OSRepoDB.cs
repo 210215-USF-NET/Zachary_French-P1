@@ -100,10 +100,17 @@ namespace OSDL
 
         public List<Inventory> GetInventories()
         {
-            return _context.Inventories
+            List<Inventory> invs = _context.Inventories
                 .AsNoTracking()
                 .Select(inv => inv)
                 .ToList();
+
+            foreach(Inventory i in invs)
+            {
+                i.Product = GetProductByID(i.ProductID);
+            }
+
+            return invs;
         }
 
         public List<Item> GetItems()

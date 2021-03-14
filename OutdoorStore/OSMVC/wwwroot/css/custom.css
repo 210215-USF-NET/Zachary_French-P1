@@ -25,3 +25,16 @@
     padding: 10px;
     font-size: 16px;
 }*/
+
+.stock {
+    color: #6c757d!important;
+    text-align: right;
+}
+
+product-header {
+    padding: .5rem 1rem;
+    margin-bottom: 0;
+    background-color: rgba(0,0,0,.03);
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    font-weight: bold;
+}

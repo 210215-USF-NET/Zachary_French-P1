@@ -6,5 +6,7 @@ namespace OSModels
         public int Quantity { get; set; }
         public int LocationID { get; set; }
         public int ProductID { get; set; }
+    
+        public Product Product { get; set; }
     }
 }

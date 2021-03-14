@@ -59,6 +59,23 @@ namespace OSMVC.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult ProductView(string store)
+        {
+            
+            _location = _storeBL.GetLocations().FirstOrDefault(l => l.ID == int.Parse(store));
+            _location.Inventory = _storeBL.GetInventories().Where(i => i.LocationID == _location.ID).ToList();
+            HttpContext.Session.SetString("storeSelection", JsonSerializer.Serialize(_location));
+
+            return View();
+        }
+
+        public ActionResult AddToCart()
+        {
+
+            return View();
+        }
+
 
             // GET: CustomerController
             public ActionResult Index()

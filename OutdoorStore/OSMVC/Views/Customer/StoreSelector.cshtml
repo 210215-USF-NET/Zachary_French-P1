@@ -5,18 +5,6 @@
     ViewData["Title"] = "StoreSelector";
 }
 
-<script>
-    function chooseNewYork() {
-        @ViewBag.store = "NewYork";
-    }
-    function chooseChicago() {
-        @ViewBag.store = "Chicago";
-    }
-    function chooseLosAngeles() {
-        @ViewBag.store = "LosAngeles";
-    }
-</script>
-
 <section class="py-5 text-center container">
     <div class="row py-lg-3">
         <div class="col-lg-6 col-md-8 mx-auto">
@@ -28,12 +16,12 @@
 
 <div class="album py-5 bg-light">
     <div class="container">
-
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <form class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" method="post" asp-action="ProductView">
+            <input type="hidden" name="store" id="storeToPass" value="" />
             <div class="col">
-                <a class="card shadow-sm" asp-controller="Home" asp-action="Index" onclick="chooseLosAngeles()">
+                <button class="card shadow-sm" type="submit" onclick="send(3)">
                     <svg class="bd-placeholder-img card-img-top" width="100%" height="225" role="img" preserveAspectRatio="xMidYMid slice" focusable="false">
-                        <title>Los Angeles</title>
+                        <title>Burbank</title>
                         <clipPath id="rect">
                             <rect width="100%" height="100%" fill="#55595c" />
                         </clipPath>
@@ -45,10 +33,10 @@
                         <div class="d-flex justify-content-between align-items-center">
                         </div>
                     </div>
-                </a>
+                </button>
             </div>
             <div class="col">
-                <a class="card shadow-sm" asp-controller="Home" asp-action="Index" onclick="chooseChicago()">
+                <button class="card shadow-sm" type="submit" onclick="send(2)">
                     <svg class="bd-placeholder-img card-img-top" width="100%" height="225" role="img" preserveAspectRatio="xMidYMid slice" focusable="false">
                         <title>Chicago</title>
                         <clipPath id="rect">
@@ -62,10 +50,10 @@
                         <div class="d-flex justify-content-between align-items-center">
                         </div>
                     </div>
-                </a>
+                </button>
             </div>
             <div class="col">
-                <a class="card shadow-sm" asp-controller="Home" asp-action="Index" onclick="chooseNewYork()">
+                <button class="card shadow-sm" type="submit" onclick="send(1)">
                     <svg class="bd-placeholder-img card-img-top" width="100%" height="225" role="img" preserveAspectRatio="xMidYMid slice" focusable="false">
                         <title>New York</title>
                         <clipPath id="rect">
@@ -79,8 +67,14 @@
                         <div class="d-flex justify-content-between align-items-center">
                         </div>
                     </div>
-                </a>
+                </button>
             </div>
-        </div>
+        </form>
     </div>
 </div>
+
+<script>
+    function send(value) {
+        document.getElementById("storeToPass").value = value
+    }
+</script>
