@@ -42,6 +42,21 @@ namespace OSDL
             return newOrder;
         }
 
+        public Inventory AddToCart(Inventory selectedInventory, Customer cust, string quantity)
+        {
+            _context.Carts.Add(new Cart
+            {
+                CustID = cust.ID,
+                LocID = selectedInventory.LocationID,
+                ProdID = selectedInventory.ProductID,
+                Quantity = int.Parse(quantity)
+            });
+
+            _context.SaveChanges();
+
+            return selectedInventory;
+        }
+
         public bool CustomerExists(string email/*, string pass*/)
         {
             try
@@ -202,9 +217,27 @@ namespace OSDL
             }
         }
 
+        public Inventory RemoveInventory(Inventory selectedInventory, string quantity)
+        {
+            Inventory newInv = selectedInventory;
+
+            newInv.Quantity -= int.Parse(quantity);
+            UpdateInventory(newInv);
+
+            return selectedInventory;
+        }
+
         public Inventory UpdateInventory(Inventory inv)
         {
-            throw new NotImplementedException();
+            Inventory oldInv = _context.Inventories
+                .FirstOrDefault(i => i.ID == inv.ID);
+
+            _context.Entry(oldInv).CurrentValues.SetValues(inv);
+
+            _context.SaveChanges();
+            _context.ChangeTracker.Clear();
+
+            return inv;
         }
     }
 }

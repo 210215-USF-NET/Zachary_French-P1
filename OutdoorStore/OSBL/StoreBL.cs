@@ -122,5 +122,15 @@ namespace OSBL
         {
             return _repo.GetOrdersByLocation(name);
         }
+
+        public Inventory AddToCart(Inventory selectedInventory, Customer cust, string quantity)
+        {
+            return _repo.AddToCart(selectedInventory, cust, quantity);
+        }
+
+        public Inventory RemoveInventory(Inventory selectedInventory, string quantity)
+        {
+            return _repo.RemoveInventory(selectedInventory, quantity);
+        }
     }
 }

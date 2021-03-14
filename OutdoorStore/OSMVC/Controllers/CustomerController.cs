@@ -62,7 +62,6 @@ namespace OSMVC.Controllers
         [HttpPost]
         public ActionResult ProductView(string store)
         {
-            
             _location = _storeBL.GetLocations().FirstOrDefault(l => l.ID == int.Parse(store));
             _location.Inventory = _storeBL.GetInventories().Where(i => i.LocationID == _location.ID).ToList();
             HttpContext.Session.SetString("storeSelection", JsonSerializer.Serialize(_location));
@@ -70,9 +69,35 @@ namespace OSMVC.Controllers
             return View();
         }
 
-        public ActionResult AddToCart()
+        public ActionResult AddToCart(string quantity, string cartProduct)
         {
+            _location = JsonSerializer.Deserialize<Location>(HttpContext.Session.GetString("storeSelection"));
+            _customer = JsonSerializer.Deserialize<Customer>(HttpContext.Session.GetString("customerData"));
 
+            Inventory selectedInventory = _storeBL.GetInventories()
+                .FirstOrDefault(p =>
+                p.ProductID == int.Parse(cartProduct)
+                && p.LocationID == _location.ID);
+
+            _storeBL.AddToCart(selectedInventory, _customer, quantity);
+
+            /*_storeBL.RemoveInventory(selectedInventory, quantity);*/
+
+            return View("ProductView");
+        }
+
+        public ActionResult Cart()
+        {
+            List<Cart> inv = _storeBL.GetCarts();
+            foreach(Cart c in inv)
+            {
+                c.Product = _storeBL.GetProductByID(c.ProdID);
+            }
+            return View(inv);
+        }
+
+        public ActionResult Checkout()
+        {
             return View();
         }
 
