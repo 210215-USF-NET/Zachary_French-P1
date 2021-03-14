@@ -83,9 +83,9 @@ namespace OSBL
             return _repo.AddItem(newItem);
         }
 
-        public List<Cart> EmptyCart()
+        public List<Cart> EmptyCart(List<Cart> carts)
         {
-            return _repo.EmptyCart();
+            return _repo.EmptyCart(carts);
         }
 
         public Product GetProductByShortName(string str)
@@ -128,7 +128,7 @@ namespace OSBL
             return _repo.AddToCart(selectedInventory, cust, quantity);
         }
 
-        public Inventory RemoveInventory(Inventory selectedInventory, string quantity)
+        public Inventory RemoveInventory(Inventory selectedInventory, int quantity)
         {
             return _repo.RemoveInventory(selectedInventory, quantity);
         }

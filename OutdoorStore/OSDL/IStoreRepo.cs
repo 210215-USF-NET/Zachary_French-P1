@@ -23,11 +23,11 @@ namespace OSDL
         Inventory UpdateInventory(Inventory inv);
         Cart AddCart(Cart newCart);
         List<Cart> GetCarts();
-        List<Cart> EmptyCart();
+        List<Cart> EmptyCart(List<Cart> carts);
         bool CustomerExists(string email/*, string pass*/);
         List<Order> GetOrdersByCustomer(string email);
         List<Order> GetOrdersByLocation(string name);
         Inventory AddToCart(Inventory selectedInventory, Customer cust, string quantity);
-        Inventory RemoveInventory(Inventory selectedInventory, string quantity);
+        Inventory RemoveInventory(Inventory selectedInventory, int quantity);
     }
 }

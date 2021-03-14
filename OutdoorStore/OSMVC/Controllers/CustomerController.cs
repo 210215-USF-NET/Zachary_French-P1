@@ -71,8 +71,8 @@ namespace OSMVC.Controllers
 
         public ActionResult AddToCart(string quantity, string cartProduct)
         {
-            _location = JsonSerializer.Deserialize<Location>(HttpContext.Session.GetString("storeSelection"));
             _customer = JsonSerializer.Deserialize<Customer>(HttpContext.Session.GetString("customerData"));
+            _location = JsonSerializer.Deserialize<Location>(HttpContext.Session.GetString("storeSelection"));
 
             Inventory selectedInventory = _storeBL.GetInventories()
                 .FirstOrDefault(p =>
@@ -88,7 +88,9 @@ namespace OSMVC.Controllers
 
         public ActionResult Cart()
         {
-            List<Cart> inv = _storeBL.GetCarts();
+            _customer = JsonSerializer.Deserialize<Customer>(HttpContext.Session.GetString("customerData"));
+            List<Cart> inv = _storeBL.GetCarts().Where(c => c.CustID == _customer.ID).ToList();
+
             foreach(Cart c in inv)
             {
                 c.Product = _storeBL.GetProductByID(c.ProdID);
@@ -96,9 +98,55 @@ namespace OSMVC.Controllers
             return View(inv);
         }
 
-        public ActionResult Checkout()
+        /// <summary>
+        /// Takes products currently in the cart for the customer currenlty logged-in at the most recently browsed store
+        /// and stores all the necessary information in the Orders and Items tables.  Finally once all data has been stored
+        /// correctly, the Cart items are removed from the Cart, leaving behind all the items for other customers and stores.
+        /// </summary>
+        /// <param name="tp"></param>
+        /// <returns></returns>
+        public ActionResult Checkout(int tp)
         {
-            return View();
+            //grab variables
+            _customer = JsonSerializer.Deserialize<Customer>(HttpContext.Session.GetString("customerData"));
+            _location = JsonSerializer.Deserialize<Location>(HttpContext.Session.GetString("storeSelection"));
+            List<Cart> carts = _storeBL.GetCarts().Where(c => c.CustID == _customer.ID).ToList();
+            int orderID = _storeBL.GetOrders().LastOrDefault().ID + 1;
+            Cart cart = carts.Last();
+
+            //Add Order to table
+            Order newOrder = new Order()
+            {
+                CustID = _customer.ID,
+                LocID = _location.ID,
+                Date = DateTime.Now,
+                TotalPrice = tp
+            };
+            _storeBL.AddOrder(newOrder);
+
+            //loop
+            foreach (Cart c in carts)
+            {
+                //add Items to table
+                Item itm = new Item()
+                {
+                    OrderID = orderID,
+                    ProdID = c.ProdID,
+                    Quantity = c.Quantity,
+                };
+                _storeBL.AddItem(itm);
+
+                //reduce stock in appropriate store
+                Inventory oldInv = _storeBL.GetInventories()
+                    .FirstOrDefault(i => i.ProductID == c.ProdID && i.LocationID == _location.ID);
+                _storeBL.RemoveInventory(oldInv, c.Quantity);
+            }
+
+            //Empty Cart
+            _storeBL.EmptyCart(_storeBL.GetCarts()
+                .Where(c => c.ProdID == cart.ProdID && c.LocID == cart.LocID).ToList());
+
+            return View("CustomerHome");
         }
 
 

@@ -76,11 +76,12 @@ namespace OSDL
             return custToBeDeleted;
         }
 
-        public List<Cart> EmptyCart()
+        public List<Cart> EmptyCart(List<Cart> carts)
         {
-            List<Cart> fullCart = GetCarts();
-            _context.Carts.RemoveRange(fullCart);
-            return fullCart;
+            _context.Carts.RemoveRange(carts);
+            _context.SaveChanges();
+
+            return carts;
         }
 
         public List<Cart> GetCarts()
@@ -217,11 +218,11 @@ namespace OSDL
             }
         }
 
-        public Inventory RemoveInventory(Inventory selectedInventory, string quantity)
+        public Inventory RemoveInventory(Inventory selectedInventory, int quantity)
         {
             Inventory newInv = selectedInventory;
 
-            newInv.Quantity -= int.Parse(quantity);
+            newInv.Quantity -= quantity;
             UpdateInventory(newInv);
 
             return selectedInventory;

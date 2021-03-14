@@ -26,8 +26,8 @@ namespace OSBL
         Inventory UpdateInventory(Inventory inv);
         Cart AddCart(Cart newCart);
         List<Cart> GetCarts();
-        List<Cart> EmptyCart();
+        List<Cart> EmptyCart(List<Cart> carts);
         Inventory AddToCart(Inventory selectedInventory, Customer cust, string quantity);
-        Inventory RemoveInventory(Inventory selectedInventory, string quantity);
+        Inventory RemoveInventory(Inventory selectedInventory, int quantity);
     }
 }
