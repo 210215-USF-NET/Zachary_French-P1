@@ -1,0 +1,57 @@
+﻿@model List<OSModels.Inventory>
+
+@{
+    ViewData["Title"] = "InventoryByLocation";
+}
+
+<h1>InventoryByLocation</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Product
+            </th>
+            <th>
+                # in Stock
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                @*            <td>
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    </td>*@
+            </tr>
+        }
+    </tbody>
+</table>
+
+<form><button type="submit" class="w-100 btn btn-lg btn-outline-danger" asp-controller="Manager" asp-action="ManagerHome">Back to manager menu</button></form>
+
+<script>
+    function locationFinder(id)
+    switch (id) {
+        case 1: return "New York"
+        case 2: return "Chicago"
+        case 3: return "Los Angeles"
+    }
+</script>

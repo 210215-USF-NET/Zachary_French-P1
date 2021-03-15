@@ -1,0 +1,62 @@
+﻿@using Microsoft.AspNetCore.Http;
+@using OSModels;
+@using System.Text.Json;
+@model List<OSModels.Order>
+
+@{
+    ViewData["Title"] = "OrderHistory";
+    List<Item> items = JsonSerializer.Deserialize<List<Item>>(Context.Session.GetString("orderItems"));
+}
+
+<h1>Order History</h1>
+
+<table class="table">
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                Order #@item.ID
+            </td>
+            <td>
+                @item.Date
+            </td>
+            <td>
+                Total Price: @item.TotalPrice Doge
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+            foreach (Item itm in items)
+            {
+                if (itm.OrderID == item.ID)
+                {
+                    <tr>
+                        <td></td>
+                        <td>
+                            @itm.Product.Name
+                        </td>
+                        <td>
+                            Quantity: @itm.Quantity
+                        </td>
+                        <td>
+                            Price: @itm.Product.Price Doge
+                        </td>
+                        <td></td>
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+</table>
+
+<form><button type="submit" class="w-100 btn btn-lg btn-outline-danger" asp-controller="Manager" asp-action="ManagerHome">Back to manager menu</button></form>
+
+<script>
+    function locationFinder(id)
+    switch (id) {
+        case 1: return "New York"
+        case 2: return "Chicago"
+        case 3: return "Los Angeles"
+    }
+</script>

@@ -29,9 +29,9 @@ namespace OSBL
             return _repo.GetCustomerByName(name);
         }
 
-        public void AddOrder(Order order)
+        public Order AddOrder(Order order)
         {
-            _repo.AddOrder(order);
+            return _repo.AddOrder(order);
         }
 
         public List<Order> GetOrders()
@@ -83,9 +83,9 @@ namespace OSBL
             return _repo.AddItem(newItem);
         }
 
-        public void EmptyCart()
+        public List<Cart> EmptyCart(List<Cart> carts)
         {
-            _repo.EmptyCart();
+            return _repo.EmptyCart(carts);
         }
 
         public Product GetProductByShortName(string str)
@@ -93,9 +93,44 @@ namespace OSBL
             return _repo.GetProductByShortName(str);
         }
 
-        public void UpdateInventory(Inventory inv)
+        public Inventory UpdateInventory(Inventory inv)
         {
-            _repo.UpdateInventory(inv);
+            return _repo.UpdateInventory(inv);
+        }
+
+        public Customer DeleteCustomer(Customer custToBeDeleted)
+        {
+            return _repo.DeleteCustomer(custToBeDeleted);
+        }
+
+        public Customer GetCustomerByEmail(string email)
+        {
+            return _repo.GetCustomerByEmail(email);
+        }
+
+        public bool CustomerExists(string email/*, string pass*/)
+        {
+            return _repo.CustomerExists(email/*, pass*/);
+        }
+
+        public List<Order> GetOrdersByCustomer(string email)
+        {
+            return _repo.GetOrdersByCustomer(email);
+        }
+
+        public List<Order> GetOrdersByLocation(string name)
+        {
+            return _repo.GetOrdersByLocation(name);
+        }
+
+        public Inventory AddToCart(Inventory selectedInventory, Customer cust, string quantity)
+        {
+            return _repo.AddToCart(selectedInventory, cust, quantity);
+        }
+
+        public Inventory RemoveInventory(Inventory selectedInventory, int quantity)
+        {
+            return _repo.RemoveInventory(selectedInventory, quantity);
         }
     }
 }

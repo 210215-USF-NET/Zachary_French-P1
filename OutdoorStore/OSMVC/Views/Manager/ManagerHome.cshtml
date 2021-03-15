@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewData["Title"] = "ManagerHome";
+}
+
+<div>
+    <div>
+        <form><button type="submit" class="w-100 btn btn-lg btn-outline-danger" asp-controller="Manager" asp-action="CustomerList">View all Customers</button></form>
+    </div>
+    <div>
+        <form><button type="submit" class="w-100 btn btn-lg btn-outline-danger" asp-controller="Manager" asp-action="StoreSelectorOrders">View each Location's Order History</button></form>
+    </div>
+    <div>
+        <form><button type="submit" class="w-100 btn btn-lg btn-outline-danger" asp-controller="Manager" asp-action="StoreSelectorInventory">View each Location's Iventory</button></form>
+    </div>
+    <div>
+        <form><button type="submit" class="w-100 btn btn-lg btn-outline-danger" asp-controller="Manager" asp-action="ProductList">View all Products</button></form>
+    </div>
+    <div>
+        <form><button type="submit" class="w-100 btn btn-lg btn-outline-danger" asp-controller="Manager" asp-action="ManagerHome">Restock an Item</button></form>
+    </div>
+    <div>
+        <form><button type="submit" class="w-100 btn btn-lg btn-outline-danger" asp-controller="Manager" asp-action="ManagerHome">Find a Customer by Name</button></form>
+    </div>
+</div>
+

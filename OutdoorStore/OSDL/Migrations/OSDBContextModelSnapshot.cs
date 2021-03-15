@@ -68,6 +68,9 @@ namespace OSDL.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("text");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
@@ -98,6 +101,8 @@ namespace OSDL.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("LocationID");
+
+                    b.HasIndex("ProductID");
 
                     b.ToTable("Inventories");
                 });
@@ -235,6 +240,14 @@ namespace OSDL.Migrations
                         .HasForeignKey("LocationID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("OSModels.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("OSModels.Item", b =>
@@ -249,7 +262,7 @@ namespace OSDL.Migrations
             modelBuilder.Entity("OSModels.Order", b =>
                 {
                     b.HasOne("OSModels.Customer", "Customer")
-                        .WithMany()
+                        .WithMany("OrderHistory")
                         .HasForeignKey("CustomerID");
 
                     b.HasOne("OSModels.Location", "Location")
@@ -259,6 +272,11 @@ namespace OSDL.Migrations
                     b.Navigation("Customer");
 
                     b.Navigation("Location");
+                });
+
+            modelBuilder.Entity("OSModels.Customer", b =>
+                {
+                    b.Navigation("OrderHistory");
                 });
 
             modelBuilder.Entity("OSModels.Location", b =>

@@ -1,0 +1,63 @@
+﻿@using Microsoft.AspNetCore.Http
+@using OSModels;
+@using System.Text.Json;
+@{
+    ViewData["Title"] = "Browse Products";
+    Location l = JsonSerializer.Deserialize<Location>(Context.Session.GetString("storeSelection"));
+}
+
+<section class="py-5 text-center container">
+    <div class="row py-lg-3">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light">Product Selection</h1>
+            <p class="lead text-muted">Which of our lovely stores would you like to browse?</p>
+            <form><button type="submit" class="w-100 btn btn-lg btn-outline-primary" asp-controller="Customer" asp-action="CustomerHome">Back to Home</button></form>
+        </div>
+    </div>
+</section>
+
+<div class="album py-5 bg-light">
+    <div class="container">
+        <form class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" asp-action="AddToCart">
+            <input type="hidden" name="cartProduct" id="ProductForCart" value="" />
+            @foreach (Inventory i in l.Inventory)
+            {
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <div class="card-header">@i.Product.Name</div>
+                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225" role="img" preserveAspectRatio="xMidYMid slice" focusable="false">
+                            <title>@i.Product.Name</title>
+                            <clipPath id="rect">
+                                <rect width="100%" height="100%" fill="#55595c" />
+                            </clipPath>
+                            <image width="100%" height="225" xlink:href="https://i.imgur.com/N0MKOaR.jpg" clip-path="url(#rect)" />
+                        </svg>
+
+                        <div class="card-body">
+                            <p class="card-text">@i.Product.Description</p>
+                            <p style="font-weight:bold">@i.Product.Price Doge</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="stock">Stock: @i.Quantity</small>
+                                <div style="text-align:right; vertical-align:central;">
+                                    <select name="quantity" id="addCount">
+                                        @for (int j = 0; j <= i.Quantity; j++)
+                                        {
+                                            <option value="@j">@j</option>
+                                        }
+                                    </select>
+                                    <button type="submit" class="btn btn-outline-primary" onclick="cartSubmit(@i.ProductID)">Add to Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </form>
+    </div>
+</div>
+
+<script>
+    function cartSubmit(value) {
+        document.getElementById("ProductForCart").value = value
+    }
+</script>
