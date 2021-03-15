@@ -168,9 +168,44 @@ namespace OSMVC.Controllers
 
         }
 
+        public ActionResult SortedOrderHistory(int sortType)
+        {
+            _customer = JsonSerializer.Deserialize<Customer>(HttpContext.Session.GetString("customerData"));
+            List<Order> orders = _storeBL.GetOrders().Where(o => o.CustID == _customer.ID).ToList();
+            List<Item> items = JsonSerializer.Deserialize<List<Item>>(HttpContext.Session.GetString("orderItems"));
+            ViewBag.sortType = sortType;
 
-            // GET: CustomerController
-            public ActionResult Index()
+            switch(sortType)
+            {
+                case 0:
+                    orders = orders.OrderBy(h => h.TotalPrice).ToList();
+                    break;
+
+                case 1:
+                    orders = orders.OrderBy(h => h.TotalPrice).ToList();
+                    orders.Reverse();
+                    break;
+
+                case 2:
+                    orders = orders.OrderBy(h => h.Date).ToList();
+                    break;
+
+                case 3:
+                    orders = orders.OrderBy(h => h.Date).ToList();
+                    orders.Reverse();
+                    break;
+
+                default:
+                    break;
+            }
+
+            return View(orders);
+
+        }
+
+
+        // GET: CustomerController
+        public ActionResult Index()
         {
             return View(_storeBL.GetCustomers().Select(cust => _mapper.parseCustomerToVM(cust)).ToList());
         }
