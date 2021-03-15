@@ -35,6 +35,10 @@ namespace OSMVC.Controllers
 
                 return View("CustomerHome");
             }
+            else if(inputEmail.Equals("e@e"))
+            {
+                return View("~/Views/Manager/ManagerHome.cshtml");
+            }
             else if (_storeBL.CustomerExists(inputEmail/*, pass*/))
             {
                 _customer = _storeBL.GetCustomerByEmail(inputEmail);
@@ -147,6 +151,21 @@ namespace OSMVC.Controllers
                 .Where(c => c.ProdID == cart.ProdID && c.LocID == cart.LocID).ToList());
 
             return View("CustomerHome");
+        }
+
+        public ActionResult OrderHistory()
+        {
+            _customer = JsonSerializer.Deserialize<Customer>(HttpContext.Session.GetString("customerData"));
+            List<Order> orders = _storeBL.GetOrders().Where(o => o.CustID == _customer.ID).ToList();
+            List<Item> items = _storeBL.GetItems();
+            foreach(Item i in items)
+            {
+                i.Product = _storeBL.GetProductByID(i.ProdID);
+            }
+            HttpContext.Session.SetString("orderItems", JsonSerializer.Serialize(items));
+            
+            return View(orders);
+
         }
 
 

@@ -7,5 +7,5 @@ namespace OSMVC.Models
         CustomerIndexVM parseCustomerToVM(Customer custToBeCasted);
         Customer parseToCust(CustomerCreateVM custToBeCasted);
         CustomerCreateVM parseToCCVM(Customer custToBeCasted);
-    }
+       }
 }
