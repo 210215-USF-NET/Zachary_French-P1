@@ -29,5 +29,6 @@ namespace OSDL
         List<Order> GetOrdersByLocation(string name);
         Inventory AddToCart(Inventory selectedInventory, Customer cust, string quantity);
         Inventory RemoveInventory(Inventory selectedInventory, int quantity);
+        Inventory AddInventory(Inventory newInv);
     }
 }

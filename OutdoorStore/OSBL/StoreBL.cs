@@ -132,5 +132,10 @@ namespace OSBL
         {
             return _repo.RemoveInventory(selectedInventory, quantity);
         }
+
+        public Inventory AddInventory(Inventory newInv)
+        {
+            return _repo.AddInventory(newInv);
+        }
     }
 }

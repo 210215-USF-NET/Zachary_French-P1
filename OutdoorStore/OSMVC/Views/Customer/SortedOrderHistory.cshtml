@@ -40,15 +40,8 @@
                 </td>
                 <td></td>
             </tr>
-            foreach (Item itm in items)
-            {
-                if (itm.OrderID == item.ID)
-                {
-                    sortedList.Add(itm);
-                }
-            }
 
-            foreach (Item itm in sortedList)
+            foreach (Item itm in items.Where(i => i.OrderID == item.ID))
             {
                 <tr>
                     <td></td>

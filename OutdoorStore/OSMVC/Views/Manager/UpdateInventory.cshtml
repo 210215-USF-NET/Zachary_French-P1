@@ -1,0 +1,49 @@
+﻿@using OSModels;
+
+@{ 
+    List<Product> products = ViewBag.Products;
+    List<Location> locations = ViewBag.Locations;
+}
+
+<form style="display: flex; align-items: center; justify-content: center; padding: 30px;" asp-action="Restock">
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    Select which product to restock:
+                </td>
+                <td>
+                    Where:
+                </td>
+                <td>
+                    How many:
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <select name="productSelection" id="productChooser">
+                        @foreach (Product p in products)
+                        {
+                            <option value="@p.ID">@p.Name</option>
+                        }
+                    </select>
+                </td>
+                <td>
+                    <select name="locationSelection" id="locationChooser">
+                        @foreach (Location l in locations)
+                        {
+                            <option value="@l.ID">@l.Name</option>
+                        }
+                    </select>
+                </td>
+                <td>
+                    <input type="number" name="quantity" />
+                </td>
+                <td>
+                    <button class="btn btn-lg btn-outline-danger">Submit</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>

@@ -78,9 +78,62 @@ namespace OSMVC.Controllers
 
         public ActionResult ProductList()
         {
-
             return View(_storeBL.GetProducts());
         }
+
+        public ActionResult SearchCustomer()
+        {
+            return View();
+        }
+
+        public ActionResult CustomerByName(string name)
+        {
+            try 
+            {
+                Customer c = _storeBL.GetCustomerByName(name);
+                return View(c);
+            }
+            catch(Exception)
+            {
+                //Log.Error("failed to find customer");
+                return View("ManagerHome");
+            }
+        }
+
+        public ActionResult UpdateInventory()
+        {
+            ViewBag.Products = _storeBL.GetProducts();
+            ViewBag.Locations = _storeBL.GetLocations();
+            return View();
+        }
+
+        public ActionResult Restock(int productSelection, int locationSelection, int quantity)
+        {
+            try
+            {
+                Inventory updatedInventory = _storeBL.GetInventories()
+                .FirstOrDefault(i => i.ProductID == productSelection && i.LocationID == locationSelection);
+
+                updatedInventory.Quantity = quantity;
+
+                _storeBL.UpdateInventory(updatedInventory);
+            }
+            catch(Exception)
+            {
+                //Log.Error("That product is not in stock at the selected location!");
+                _storeBL.AddInventory(new Inventory() 
+                {
+                    Quantity = quantity,
+                    ProductID = productSelection,
+                    LocationID = locationSelection
+                });
+            }
+            
+
+            return View("ManagerHome");
+        }
+
+
 
         // GET: ManagerController
         public ActionResult Index()
