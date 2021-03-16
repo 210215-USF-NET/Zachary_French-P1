@@ -6,6 +6,8 @@
 @{
     ViewData["Title"] = "OrderHistory";
     List<Item> items = JsonSerializer.Deserialize<List<Item>>(Context.Session.GetString("orderItems"));
+    int sortType = ViewBag.sortType;
+    List<Item> sortedList = new List<Item>();
 }
 
 <h1>Order History</h1>
@@ -38,25 +40,34 @@
                 </td>
                 <td></td>
             </tr>
-            foreach (Item itm in items)
+
+            foreach (Item itm in items.Where(i => i.OrderID == item.ID))
             {
-                if (itm.OrderID == item.ID)
-                {
-                    <tr>
-                        <td></td>
-                        <td>
-                            @itm.Product.Name
-                        </td>
-                        <td>
-                            Quantity: @itm.Quantity
-                        </td>
-                        <td>
-                            Price: @itm.Product.Price Doge
-                        </td>
-                        <td></td>
-                    </tr>
-                }
+                <tr>
+                    <td></td>
+                    <td>
+                        @itm.Product.Name
+                    </td>
+                    <td>
+                        Quantity: @itm.Quantity
+                    </td>
+                    <td>
+                        Price: @itm.Product.Price Doge
+                    </td>
+                    <td></td>
+                </tr>
             }
         }
     </tbody>
 </table>
+
+<form><button type="submit" class="w-100 btn btn-lg btn-outline-secondary" asp-action="CustomerHome">Back to Home</button></form>
+
+<script>
+    function locationFinder(id)
+    switch (id) {
+        case 1: return "New York"
+        case 2: return "Chicago"
+        case 3: return "Los Angeles"
+    }
+</script>

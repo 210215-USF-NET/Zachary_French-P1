@@ -11,6 +11,7 @@ namespace OSModels
         public int Price { get; set; }
         public ProductCategory Category { get; set; }
         public string Description { get; set; }
+        public string Photo { get; set; }
 
         private void ThrowNullException()
         {

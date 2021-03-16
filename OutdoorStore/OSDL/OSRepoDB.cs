@@ -28,6 +28,13 @@ namespace OSDL
             return newCust;
         }
 
+        public Inventory AddInventory(Inventory newInv)
+        {
+            _context.Inventories.Add(newInv);
+            _context.SaveChanges();
+            return newInv;
+        }
+
         public Item AddItem(Item newItem)
         {
             _context.Items.Add(newItem);
@@ -230,15 +237,24 @@ namespace OSDL
 
         public Inventory UpdateInventory(Inventory inv)
         {
-            Inventory oldInv = _context.Inventories
-                .FirstOrDefault(i => i.ID == inv.ID);
+            try
+            {
+                Inventory oldInv = _context.Inventories
+                    .FirstOrDefault(i => i.ID == inv.ID);
 
-            _context.Entry(oldInv).CurrentValues.SetValues(inv);
+                _context.Entry(oldInv).CurrentValues.SetValues(inv);
 
-            _context.SaveChanges();
-            _context.ChangeTracker.Clear();
+                _context.SaveChanges();
+                _context.ChangeTracker.Clear();
 
-            return inv;
+                return inv;
+            }
+            catch(Exception)
+            {
+                //Log.Error("That product is not in stock at the selected location!");
+                AddInventory(inv);
+                return inv;
+            }
         }
     }
 }
