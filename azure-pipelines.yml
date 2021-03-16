@@ -24,6 +24,7 @@ steps:
     command: 'publish'
     zipAfterPublish: true
     publishWebProjects: true
+    projects: '**/OSMVC/*.csproj'
 
 - task: AzureRmWebAppDeployment@4
   inputs:
