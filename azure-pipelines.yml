@@ -15,6 +15,11 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: NuGetToolInstaller@1
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '**/*.sln'
+
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
@@ -33,3 +38,5 @@ steps:
     appType: 'webApp'
     WebAppName: 'ZachOutdoorStore'
     packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    AdditionalArguments: 
+
