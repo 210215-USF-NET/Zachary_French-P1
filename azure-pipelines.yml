@@ -10,7 +10,7 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  solution: '**/*.sln'
+  solution: '**/OutdoorStore/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
@@ -41,7 +41,7 @@ steps:
     command: 'publish'
     zipAfterPublish: true
     publishWebProjects: true
-    projects: '**/OSMVC/*.csproj'
+    arguments:
 
 
 - task: AzureRmWebAppDeployment@4
