@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using OSMVC.Models;
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
 
 namespace OSMVC.Controllers
 {
@@ -17,11 +18,13 @@ namespace OSMVC.Controllers
         private IMapper _mapper;
         private Customer _customer;
         private Location _location;
+        private readonly ILogger<HomeController> _logger;
 
-        public ManagerController(IStoreBL sbl, IMapper mapper)
+        public ManagerController(IStoreBL sbl, IMapper mapper, ILogger<HomeController> logger)
         {
             _storeBL = sbl;
             _mapper = mapper;
+            _logger = logger;
         }
         public ActionResult ManagerHome()
         {
@@ -142,9 +145,9 @@ namespace OSMVC.Controllers
         }
 
         // GET: ManagerController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(string name)
         {
-            return View();
+            return View(_mapper.parseToCCVM(_storeBL.GetCustomerByName(name)));
         }
 
         // GET: ManagerController/Create
@@ -190,9 +193,10 @@ namespace OSMVC.Controllers
         }
 
         // GET: ManagerController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string name)
         {
-            return View();
+            _storeBL.DeleteCustomer(_storeBL.GetCustomerByName(name));
+            return RedirectToAction(nameof(CustomerList));
         }
 
         // POST: ManagerController/Delete/5
@@ -202,7 +206,7 @@ namespace OSMVC.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(CustomerList));
             }
             catch
             {
