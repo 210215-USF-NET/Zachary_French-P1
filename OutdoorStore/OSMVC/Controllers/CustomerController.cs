@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using OSBL;
 using OSModels;
 using OSMVC.Models;
@@ -17,11 +18,13 @@ namespace OSMVC.Controllers
         private IMapper _mapper;
         private Customer _customer;
         private Location _location;
+        private readonly ILogger<HomeController> _logger;
 
-        public CustomerController(IStoreBL sbl, IMapper mapper)
+        public CustomerController(IStoreBL sbl, IMapper mapper, ILogger<HomeController> logger)
         {
             _storeBL = sbl;
             _mapper = mapper;
+            _logger = logger;
         }
 
         // GET: CustomerController
@@ -35,7 +38,7 @@ namespace OSMVC.Controllers
 
                 return View("CustomerHome");
             }
-            else if(inputEmail.Equals("e@e"))
+            else if(inputEmail.Equals("manager@email.com"))
             {
                 return View("~/Views/Manager/ManagerHome.cshtml");
             }
@@ -232,7 +235,7 @@ namespace OSMVC.Controllers
                 try
                 {
                     _storeBL.AddCustomer(_mapper.parseToCust(newCust));
-                    return RedirectToAction("Login", new { email = newCust.Email });
+                    return RedirectToAction("Login", new { inputEmail = newCust.Email });
                 }
                 catch
                 {
