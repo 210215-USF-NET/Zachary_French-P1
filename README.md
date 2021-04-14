@@ -41,3 +41,4 @@ To-do list:
 Explore the UI as you wish - try to figure out the email of the manager account!
 
 ## License
+This project is licensed under the [MIT License.](https://github.com/210215-USF-NET/Zachary_French-P1/blob/main/LICENSE)
